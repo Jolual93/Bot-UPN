@@ -9,11 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
 
-  <!--
-    ✅ URL CORRECTA del script de ElevenLabs (unpkg CDN oficial)
-    ⚠️  NO uses elevenlabs.io/convai-widget/index.js — esa URL no funciona
-  -->
-  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
 
   <style>
     :root {
@@ -511,31 +507,34 @@
       document.getElementById('name-form').style.display = 'none';
       document.getElementById('agent-area').style.display = 'block';
 
-      /*
-       * ══════════════════════════════════════════════════════
-       * INYECCIÓN DINÁMICA DEL WIDGET DE ELEVENLABS
-       *
-       * Se usa override-config para pasar el nombre del usuario
-       * como primer mensaje personalizado del agente.
-       *
-       * Si el agente en ElevenLabs tiene configurado el campo
-       * "First Message", este override-config lo sobreescribirá
-       * con el saludo personalizado.
-       * ══════════════════════════════════════════════════════
-       */
       const container = document.getElementById('elevenlabs-container');
 
-      const widget = document.createElement('elevenlabs-convai');
-      widget.setAttribute('agent-id', 'agent_0001kpwna0jzfx5rb0drcj689q2k');
-      widget.setAttribute('override-config', JSON.stringify({
-        conversation_config_override: {
-          agent: {
-            first_message: `Hola ${name}, soy el asistente académico Guía Norte. ¿En qué puedo ayudarte hoy?`
+      function insertWidget() {
+        const widget = document.createElement('elevenlabs-convai');
+        widget.setAttribute('agent-id', 'agent_0001kpwna0jzfx5rb0drcj689q2k');
+        widget.setAttribute('override-config', JSON.stringify({
+          conversation_config_override: {
+            agent: {
+              first_message: `Hola ${name}, soy el asistente académico Guía Norte. ¿En qué puedo ayudarte hoy?`
+            }
           }
-        }
-      }));
+        }));
+        container.innerHTML = '';
+        container.appendChild(widget);
+      }
 
-      container.appendChild(widget);
+      /*
+       * El script de ElevenLabs se carga con "async", por lo que el
+       * custom element <elevenlabs-convai> puede no estar registrado
+       * todavía cuando el usuario pulsa el botón.
+       * customElements.whenDefined() espera hasta que esté listo
+       * antes de insertar el widget, evitando que aparezca vacío.
+       */
+      if (customElements.get('elevenlabs-convai')) {
+        insertWidget();
+      } else {
+        customElements.whenDefined('elevenlabs-convai').then(insertWidget);
+      }
 
       // Scroll suave al widget
       document.getElementById('asistente').scrollIntoView({ behavior: 'smooth' });
@@ -573,6 +572,12 @@
       observer.observe(el);
     });
   </script>
+
+  <!--
+    Script de ElevenLabs al final del body (sin async) para asegurar
+    que el custom element quede registrado antes de que el usuario interactúe.
+  -->
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" type="text/javascript"></script>
 
 </body>
 </html>
