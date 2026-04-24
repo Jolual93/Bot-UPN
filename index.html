@@ -4,389 +4,575 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guía Norte — Asistente Académico UPN</title>
-  
-  <!-- Preconexión para fuentes y recursos externos -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
-  
-  <!-- Script de ElevenLabs en el head con crossorigin para evitar 'Script error' genéricos -->
-  <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript" crossorigin="anonymous"></script>
+
+  <!--
+    ✅ URL CORRECTA del script de ElevenLabs (unpkg CDN oficial)
+    ⚠️  NO uses elevenlabs.io/convai-widget/index.js — esa URL no funciona
+  -->
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
 
   <style>
-    /* ─── VARIABLES UPN ─────────────────────────────────────────── */
     :root {
-      --upn-yellow: #FFCD00;
-      --upn-black: #000000;
-      --upn-white: #FFFFFF;
-      --upn-gray: #f4f4f4;
-      --upn-text-gray: #444444;
-      --radius: 0px; 
+      --yellow: #FFCD00;
+      --yellow-dark: #e6b800;
+      --black: #000000;
+      --white: #FFFFFF;
+      --gray: #f4f4f4;
+      --text-gray: #444444;
       --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* ─── RESET ──────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'DM Sans', sans-serif;
-      background: var(--upn-white);
-      color: var(--upn-black);
+      background: var(--white);
+      color: var(--black);
       line-height: 1.6;
       overflow-x: hidden;
     }
+    a { text-decoration: none; color: inherit; }
 
-    /* ─── HEADER ─────────────────────────────────────────────────── */
+    /* ── HEADER ── */
     header {
-      background: var(--upn-black);
-      color: var(--upn-white);
-      padding: 1rem 0;
+      background: var(--black);
+      color: var(--white);
       position: sticky;
       top: 0;
       z-index: 1000;
-      border-bottom: 5px solid var(--upn-yellow);
+      border-bottom: 5px solid var(--yellow);
     }
     .header-inner {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      height: 64px;
     }
-    .logo-upn {
+    .logo {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1rem;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-    .logo-symbol {
-      background: var(--upn-yellow);
-      color: var(--upn-black);
-      width: 42px;
-      height: 42px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 1.8rem;
+    .logo-mark {
+      background: var(--yellow);
+      color: var(--black);
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1rem;
+      flex-shrink: 0;
     }
+    nav { display: flex; gap: 4px; }
+    nav a {
+      color: rgba(255,255,255,0.6);
+      font-size: 13px; font-weight: 500;
+      padding: 6px 12px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      transition: color var(--transition), background var(--transition);
+    }
+    nav a:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+    .header-tag { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.35); letter-spacing: 1.5px; text-transform: uppercase; }
+    .nav-toggle {
+      display: none; background: none; border: none; cursor: pointer;
+      flex-direction: column; gap: 5px; padding: 4px;
+    }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--white); }
 
-    /* ─── HERO ───────────────────────────────────────────────────── */
+    /* ── MOBILE NAV ── */
+    .mobile-nav { display: none; flex-direction: column; background: #111; border-top: 1px solid rgba(255,255,255,0.08); padding: 12px 24px; gap: 2px; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 500; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); text-transform: uppercase; }
+    .mobile-nav a:last-child { border-bottom: none; }
+
+    /* ── HERO ── */
     .hero {
-      background: var(--upn-yellow);
-      padding: 5rem 0;
+      background: var(--yellow);
+      padding: 80px 24px;
       text-align: center;
-      border-bottom: 2px solid var(--upn-black);
+      border-bottom: 4px solid var(--black);
     }
     .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 800;
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-weight: 900;
       text-transform: uppercase;
       line-height: 0.9;
-      margin-bottom: 1.5rem;
-      letter-spacing: -2px;
+      letter-spacing: -3px;
+      margin-bottom: 20px;
     }
     .hero p {
-      max-width: 650px;
-      margin: 0 auto 2.5rem;
-      font-size: 1.3rem;
-      font-weight: 500;
-      color: rgba(0,0,0,0.8);
-    }
-
-    /* ─── DOCUMENTOS / CONSULTAS ─────────────────────────────────── */
-    .section-docs {
-      padding: 5rem 0;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 5rem 20px;
-    }
-    .grid-docs {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      margin-top: 3rem;
-    }
-    .doc-card {
-      border: 3px solid var(--upn-black);
-      padding: 2.5rem;
-      background: var(--upn-white);
-      transition: all var(--transition);
-      position: relative;
-    }
-    .doc-card:hover {
-      transform: translate(-4px, -4px);
-    }
-    .doc-card::after {
-      content: "";
-      position: absolute;
-      bottom: -10px;
-      right: -10px;
-      width: 100%;
-      height: 100%;
-      background: var(--upn-yellow);
-      z-index: -1;
-      border: 3px solid var(--upn-black);
-      transition: all var(--transition);
-    }
-    .doc-card:hover::after {
-      bottom: -14px;
-      right: -14px;
-    }
-    .doc-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      font-weight: 800;
-    }
-    .doc-card p {
-      font-size: 0.95rem;
-      color: var(--upn-text-gray);
-    }
-
-    /* ─── CHAT INTERFACE ─────────────────────────────────────────── */
-    .chat-section {
-      background: var(--upn-black);
-      color: var(--upn-white);
-      padding: 6rem 0;
-      display: flex;
-      align-items: center;
-      position: relative;
-    }
-    .chat-container {
-      max-width: 700px;
-      margin: 0 auto;
-      width: 90%;
-      background: #0a0a0a;
-      border: 3px solid var(--upn-yellow);
-      padding: 3rem;
-      position: relative;
-    }
-
-    /* ─── SOLICITUD DE NOMBRE ─── */
-    #name-request {
-      text-align: center;
-    }
-    #name-request h2 {
-      font-size: 2rem;
-      color: var(--upn-yellow);
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      font-weight: 800;
-    }
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      max-width: 450px;
-      margin: 0 auto;
-    }
-    input[type="text"] {
-      padding: 18px;
-      border: 2px solid #333;
-      background: #1a1a1a;
-      color: white;
+      max-width: 600px;
+      margin: 0 auto 32px;
       font-size: 1.1rem;
-      outline: none;
-      transition: border-color var(--transition);
-    }
-    input[type="text"]:focus {
-      border-color: var(--upn-yellow);
-    }
-    input.error {
-      border-color: #ff4444;
-    }
-    .error-msg {
-      color: #ff4444;
-      font-size: 0.85rem;
-      margin-top: -10px;
-      display: none;
       font-weight: 500;
+      color: rgba(0,0,0,0.75);
     }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-    .btn-upn {
-      background: var(--upn-yellow);
-      color: var(--upn-black);
-      border: none;
-      padding: 18px 36px;
-      font-weight: 800;
-      text-transform: uppercase;
-      cursor: pointer;
-      font-size: 1rem;
-      letter-spacing: 1px;
-      transition: transform 0.1s ease;
+    /* ── BOTONES ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      cursor: pointer; border: 2px solid var(--black);
+      transition: transform 0.1s ease, box-shadow 0.15s ease;
     }
-    .btn-upn:active {
-      transform: scale(0.98);
-    }
+    .btn:hover { transform: translate(-3px, -3px); box-shadow: 4px 4px 0 var(--black); }
+    .btn:active { transform: translate(0,0); box-shadow: none; }
+    .btn-dark { background: var(--black); color: var(--white); }
+    .btn-outline { background: transparent; color: var(--black); }
 
-    /* ─── ÁREA DEL AGENTE ─── */
-    #agent-area {
-      display: none;
-      text-align: center;
-      animation: fadeIn 0.5s ease both;
+    /* ── SECCIONES ── */
+    .section { padding: 80px 24px; max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-gray);
+      border-left: 3px solid var(--yellow); padding-left: 10px; margin-bottom: 16px;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    #welcome-msg {
-      margin-bottom: 30px;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--upn-yellow);
-      text-transform: uppercase;
-    }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; text-transform: uppercase; letter-spacing: -1px; line-height: 1.05; margin-bottom: 16px; }
+    .section-sub { font-size: 16px; color: var(--text-gray); max-width: 540px; line-height: 1.65; }
 
-    /* ─── FOOTER ─────────────────────────────────────────────────── */
-    footer {
-      background: var(--upn-black);
-      color: var(--upn-white);
-      padding: 4rem 0;
-      text-align: center;
-      border-top: 6px solid var(--upn-yellow);
+    /* ── CONSULTAS ── */
+    .consultas-bg { background: var(--gray); border-top: 3px solid var(--black); border-bottom: 3px solid var(--black); }
+    .grid-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    .card {
+      background: var(--white); border: 2px solid var(--black);
+      padding: 28px 24px; position: relative; transition: transform var(--transition); cursor: default;
     }
-    .footer-disclaimer {
-      font-size: 0.85rem;
-      opacity: 0.6;
-      max-width: 700px;
-      margin: 1.5rem auto;
-      line-height: 1.7;
+    .card::after {
+      content: ""; position: absolute; bottom: -8px; right: -8px;
+      width: 100%; height: 100%; background: var(--yellow); border: 2px solid var(--black); z-index: -1;
+      transition: all var(--transition);
     }
+    .card:hover { transform: translate(-4px, -4px); }
+    .card:hover::after { bottom: -12px; right: -12px; }
+    .card-icon { font-size: 28px; margin-bottom: 14px; }
+    .card-title { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .card-desc { font-size: 13.5px; color: var(--text-gray); line-height: 1.55; }
 
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 3rem; }
-      .chat-container { padding: 2rem 1.5rem; }
+    /* ── SECCIÓN ASISTENTE ── */
+    .chat-section { background: var(--black); color: var(--white); border-top: 4px solid var(--yellow); border-bottom: 4px solid var(--yellow); }
+    .chat-section .section-label { color: rgba(255,255,255,0.4); border-color: var(--yellow); }
+    .chat-section .section-title { color: var(--white); }
+    .chat-section .section-sub { color: rgba(255,255,255,0.55); }
+    .chat-inner {
+      display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start;
+      max-width: 1200px; margin: 0 auto; padding: 80px 24px;
+    }
+    .features-list { display: flex; flex-direction: column; gap: 16px; margin-top: 36px; }
+    .feature-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px; border: 1px solid rgba(255,255,255,0.08);
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .feature-item:hover { border-color: rgba(255,205,0,0.3); background: rgba(255,205,0,0.04); }
+    .feat-icon { width: 38px; height: 38px; background: rgba(255,205,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .feat-text strong { font-size: 14px; font-weight: 700; display: block; margin-bottom: 3px; color: var(--white); text-transform: uppercase; letter-spacing: 0.3px; }
+    .feat-text span { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+    /* ── WIDGET BOX ── */
+    .widget-box { background: #0d0d0d; border: 2px solid var(--yellow); }
+    .widget-box-header {
+      background: var(--yellow); color: var(--black);
+      padding: 14px 20px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .widget-box-header-left { display: flex; align-items: center; gap: 10px; }
+    .widget-box-icon { width: 32px; height: 32px; background: var(--black); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .widget-box-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+    .widget-box-subtitle { font-size: 11px; font-weight: 500; opacity: 0.7; }
+    .status-pill { display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.15); padding: 4px 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .status-dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; }
+    .widget-body { padding: 28px 24px; }
+
+    /* ── FORMULARIO NOMBRE ── */
+    #name-form { text-align: center; }
+    #name-form h3 { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--yellow); margin-bottom: 8px; }
+    #name-form p { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 24px; line-height: 1.55; }
+    .form-group { display: flex; flex-direction: column; gap: 10px; }
+    .input-name {
+      width: 100%; padding: 14px 16px;
+      background: #1a1a1a; border: 2px solid #333;
+      color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px;
+      outline: none; transition: border-color var(--transition);
+    }
+    .input-name::placeholder { color: rgba(255,255,255,0.3); }
+    .input-name:focus { border-color: var(--yellow); }
+    .input-name.error { border-color: #ff4444; }
+    .error-msg { color: #ff6666; font-size: 12px; font-weight: 600; text-align: left; display: none; }
+    .btn-start {
+      width: 100%; padding: 15px;
+      background: var(--yellow); color: var(--black);
+      font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1px; border: none; cursor: pointer;
+      transition: background var(--transition), transform 0.1s ease;
+    }
+    .btn-start:hover { background: #ffd519; }
+    .btn-start:active { transform: scale(0.98); }
+
+    /* ── ÁREA DEL AGENTE ── */
+    #agent-area { display: none; animation: fadeIn 0.45s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .welcome-banner {
+      background: rgba(255,205,0,0.08); border: 1px solid rgba(255,205,0,0.2);
+      padding: 12px 16px; margin-bottom: 20px;
+    }
+    .welcome-banner span { font-size: 13px; font-weight: 600; color: var(--yellow); text-transform: uppercase; letter-spacing: 0.5px; }
+    .widget-hint { margin-top: 16px; font-size: 12px; color: rgba(255,255,255,0.35); text-align: center; text-transform: uppercase; letter-spacing: 0.8px; }
+    elevenlabs-convai { display: block; margin: 0 auto; }
+
+    /* ── BENEFICIOS ── */
+    .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 2px solid var(--black); margin-top: 48px; }
+    .benefit-item { padding: 36px 28px; border-right: 2px solid var(--black); transition: background var(--transition); }
+    .benefit-item:last-child { border-right: none; }
+    .benefit-item:hover { background: #fffbdc; }
+    .benefit-num { font-size: 3rem; font-weight: 900; color: var(--yellow); line-height: 1; margin-bottom: 12px; -webkit-text-stroke: 2px var(--black); }
+    .benefit-title { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 10px; }
+    .benefit-desc { font-size: 13.5px; color: var(--text-gray); line-height: 1.6; }
+
+    /* ── AVISO ── */
+    .aviso-section { background: #fffbde; border-top: 3px solid #e6d000; border-bottom: 3px solid #e6d000; }
+    .aviso-box { max-width: 780px; margin: 0 auto; display: flex; gap: 20px; align-items: flex-start; padding: 40px 24px; }
+    .aviso-icon { font-size: 32px; flex-shrink: 0; margin-top: 2px; }
+    .aviso-text h3 { font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; color: #5c4a00; }
+    .aviso-text p { font-size: 15px; color: #7a6200; line-height: 1.65; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--black); color: rgba(255,255,255,0.5); padding: 48px 24px 32px; border-top: 5px solid var(--yellow); }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; color: var(--white); font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 1px; }
+    .footer-logo-mark { width: 30px; height: 30px; background: var(--yellow); color: var(--black); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.5px; transition: color var(--transition); }
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
+    .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 28px auto; max-width: 1200px; }
+    .footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 12px; }
+    .footer-tag { background: rgba(255,205,0,0.1); border: 1px solid rgba(255,205,0,0.2); padding: 4px 12px; font-size: 11px; color: #ffd94d; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .chat-inner { grid-template-columns: 1fr; gap: 40px; }
+      .grid-cards { grid-template-columns: repeat(2, 1fr); }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .benefit-item { border-right: none; border-bottom: 2px solid var(--black); }
+      .benefit-item:last-child { border-bottom: none; }
+      nav { display: none; }
+      .nav-toggle { display: flex; }
+      .header-tag { display: none; }
+    }
+    @media (max-width: 600px) {
+      .grid-cards { grid-template-columns: 1fr; }
+      .aviso-box { flex-direction: column; gap: 12px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
     <div class="header-inner">
-      <div class="logo-upn">
-        <div class="logo-symbol">↑↑</div>
-        <span>Universidad Privada del Norte</span>
-      </div>
-      <div style="font-weight: 700; font-size: 0.8rem; opacity: 0.7; letter-spacing: 1px;">GUÍA NORTE 2026</div>
+      <a href="#inicio" class="logo">
+        <div class="logo-mark">GN</div>
+        Guía Norte
+      </a>
+      <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#consultas">Consultas</a>
+        <a href="#asistente">Asistente</a>
+        <a href="#aviso">Aviso</a>
+      </nav>
+      <div class="header-tag">Proyecto 2026</div>
+      <button class="nav-toggle" aria-label="Menú" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+    <nav class="mobile-nav" id="mobileNav">
+      <a href="#inicio" onclick="closeNav()">Inicio</a>
+      <a href="#consultas" onclick="closeNav()">Consultas frecuentes</a>
+      <a href="#asistente" onclick="closeNav()">Asistente</a>
+      <a href="#aviso" onclick="closeNav()">Aviso legal</a>
+    </nav>
   </header>
 
-  <section class="hero">
-    <div class="container">
-      <h1>Asistente<br>Académico</h1>
-      <p>Consultas inteligentes sobre los reglamentos vigentes de la universidad.</p>
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <h1>Tu asistente<br/>académico</h1>
+    <p>Consulta información general sobre reglamentos, trámites, matrícula, vida académica y canales de orientación estudiantil.</p>
+    <div class="hero-actions">
+      <a href="#asistente" class="btn btn-dark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        Iniciar consulta
+      </a>
+      <a href="#consultas" class="btn btn-outline">Ver consultas frecuentes</a>
     </div>
   </section>
 
-  <section class="section-docs">
-    <h2 style="text-align: center; text-transform: uppercase; margin-bottom: 3rem; font-weight: 900; letter-spacing: -1px; font-size: 2.2rem;">Reglamentos Consultables</h2>
-    <div class="grid-docs">
-      <div class="doc-card">
-        <h3>Grados y Títulos</h3>
-        <p>Procesos para bachiller, titulación profesional, jurados de sustentación y duplicados de diplomas.</p>
-      </div>
-      <div class="doc-card">
-        <h3>Admisión Pregrado</h3>
-        <p>Requisitos de ingreso ordinario, becas de excelencia, traslados externos y procesos de matrícula.</p>
-      </div>
-      <div class="doc-card">
-        <h3>Posgrado y Continua</h3>
-        <p>Lineamientos para maestrías, diplomados de especialización y beneficios para colaboradores y egresados.</p>
-      </div>
-      <div class="doc-card">
-        <h3>Internado de Salud</h3>
-        <p>Prácticas preprofesionales, campos clínicos, derechos y deberes del interno en Ciencias de la Salud.</p>
+  <!-- CONSULTAS FRECUENTES -->
+  <div class="consultas-bg" id="consultas">
+    <div class="section">
+      <span class="section-label">¿Qué puedes consultar?</span>
+      <h2 class="section-title">Consultas frecuentes</h2>
+      <p class="section-sub">El asistente puede orientarte sobre estas áreas de la vida académica universitaria.</p>
+      <div class="grid-cards">
+        <div class="card"><div class="card-icon">📋</div><div class="card-title">Reglamentos académicos</div><div class="card-desc">Normas, políticas de evaluación, asistencia y conducta estudiantil.</div></div>
+        <div class="card"><div class="card-icon">📝</div><div class="card-title">Matrícula</div><div class="card-desc">Procesos de matrícula regular, reincorporaciones y cambios de carrera.</div></div>
+        <div class="card"><div class="card-icon">🗂️</div><div class="card-title">Trámites</div><div class="card-desc">Constancias, certificados, validaciones y otros trámites administrativos.</div></div>
+        <div class="card"><div class="card-icon">💳</div><div class="card-title">Pagos y servicios</div><div class="card-desc">Cronogramas de pago, becas, beneficios y convenios disponibles.</div></div>
+        <div class="card"><div class="card-icon">📚</div><div class="card-title">Biblioteca</div><div class="card-desc">Acceso a recursos bibliográficos, bases de datos y préstamos digitales.</div></div>
+        <div class="card"><div class="card-icon">📞</div><div class="card-title">Canales de atención</div><div class="card-desc">Soporte académico, psicopedagógico y administrativo oficial.</div></div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="chat-section" id="chat">
-    <div class="chat-container">
-      
-      <!-- Paso 1: Pedir Nombre (Personalización sin alerts) -->
-      <div id="name-request">
-        <h2>Identificación</h2>
-        <p style="margin-bottom: 25px; opacity: 0.8; font-size: 1.1rem;">Por favor, ingresa tu nombre para iniciar la sesión personalizada.</p>
-        <div class="input-group">
-          <input type="text" id="user-name" placeholder="Escribe tu nombre..." autocomplete="off" />
-          <div id="name-error" class="error-msg">Por favor, introduce un nombre válido para continuar.</div>
-          <button class="btn-upn" id="btn-start" onclick="startAssistant()">Acceder al Asistente</button>
+  <!-- SECCIÓN ASISTENTE -->
+  <section class="chat-section" id="asistente">
+    <div class="chat-inner">
+
+      <!-- Izquierda: info -->
+      <div>
+        <span class="section-label">Asistente por voz y texto</span>
+        <h2 class="section-title">Habla con<br/>el asistente</h2>
+        <p class="section-sub">Ingresa tu nombre e inicia una sesión personalizada. Consulta por voz o texto desde cualquier dispositivo.</p>
+        <div class="features-list">
+          <div class="feature-item">
+            <div class="feat-icon">⚡</div>
+            <div class="feat-text">
+              <strong>Respuestas rápidas</strong>
+              <span>Sin filas ni esperas. Orientación inmediata.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feat-icon">🎯</div>
+            <div class="feat-text">
+              <strong>Orientación centralizada</strong>
+              <span>Múltiples áreas académicas en un solo lugar.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feat-icon">📱</div>
+            <div class="feat-text">
+              <strong>Desde cualquier dispositivo</strong>
+              <span>Disponible en computadora, tablet o celular.</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Paso 2: El Agente -->
-      <div id="agent-area">
-        <div id="welcome-msg"></div>
-        <div id="elevenlabs-widget-container">
-          <!-- Widget de ElevenLabs -->
-          <elevenlabs-convai agent-id="agent_0001kpwna0jzfx5rb0drcj689q2k"></elevenlabs-convai>
+      <!-- Derecha: widget -->
+      <div class="widget-box">
+        <div class="widget-box-header">
+          <div class="widget-box-header-left">
+            <div class="widget-box-icon">🎓</div>
+            <div>
+              <div class="widget-box-title">Guía Norte</div>
+              <div class="widget-box-subtitle">Asistente académico</div>
+            </div>
+          </div>
+          <div class="status-pill">
+            <div class="status-dot"></div>
+            En línea
+          </div>
         </div>
-        <p style="margin-top: 30px; font-size: 0.9rem; color: var(--upn-yellow); font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Presiona el botón para hablar</p>
+
+        <div class="widget-body">
+
+          <!-- PASO 1: Formulario de nombre -->
+          <div id="name-form">
+            <h3>Identificación</h3>
+            <p>Ingresa tu nombre para iniciar la sesión y personalizar tu consulta.</p>
+            <div class="form-group">
+              <input
+                type="text"
+                id="user-name"
+                class="input-name"
+                placeholder="Escribe tu nombre..."
+                autocomplete="off"
+                maxlength="60"
+              />
+              <div id="name-error" class="error-msg">Por favor ingresa un nombre válido (mínimo 2 caracteres).</div>
+              <button class="btn-start" onclick="startAssistant()">
+                Acceder al asistente →
+              </button>
+            </div>
+          </div>
+
+          <!-- PASO 2: Área del agente -->
+          <div id="agent-area">
+            <div class="welcome-banner">
+              <span>👋 Hola, <span id="welcome-name"></span> — ¿en qué te ayudo hoy?</span>
+            </div>
+
+            <!--
+              El widget se inyecta aquí dinámicamente.
+              El nombre del usuario se pasa via override-config > first_message
+              para que el agente lo salude por su nombre al iniciar.
+            -->
+            <div id="elevenlabs-container"></div>
+
+            <div class="widget-hint">Presiona el botón del widget para hablar</div>
+          </div>
+
+        </div>
       </div>
 
     </div>
   </section>
 
+  <!-- BENEFICIOS -->
+  <div style="max-width:1200px; margin:0 auto; padding: 80px 24px;" id="beneficios">
+    <span class="section-label">¿Por qué usar Guía Norte?</span>
+    <h2 class="section-title">Diseñado para orientarte</h2>
+    <div class="benefits-grid">
+      <div class="benefit-item">
+        <div class="benefit-num">01</div>
+        <div class="benefit-title">Respuestas rápidas</div>
+        <div class="benefit-desc">Orientación inmediata sin esperar turnos. Disponible cuando lo necesitas, todos los días.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-num">02</div>
+        <div class="benefit-title">Orientación centralizada</div>
+        <div class="benefit-desc">Reglamentos, trámites, matrícula y más: toda la información académica general en un solo lugar.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-num">03</div>
+        <div class="benefit-title">Cualquier dispositivo</div>
+        <div class="benefit-desc">Accede desde tu computadora, tableta o teléfono. Completamente responsive y optimizada para móvil.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVISO IMPORTANTE -->
+  <div class="aviso-section" id="aviso">
+    <div class="aviso-box">
+      <div class="aviso-icon">⚠️</div>
+      <div class="aviso-text">
+        <h3>Aviso importante</h3>
+        <p>Este asistente es un <strong>proyecto académico experimental</strong>. No representa un canal oficial de la Universidad Privada del Norte. La información proporcionada es de carácter orientativo y general. Para decisiones finales, el estudiante debe validar la información en los <strong>canales oficiales de la universidad</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
   <footer>
-    <div class="logo-upn" style="justify-content: center; margin-bottom: 1.5rem;">
-      <div class="logo-symbol">↑↑</div>
-      <span>UPN</span>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <div class="footer-logo-mark">GN</div>
+        Guía Norte
+      </div>
+      <div class="footer-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#consultas">Consultas</a>
+        <a href="#asistente">Asistente</a>
+        <a href="#aviso">Aviso</a>
+      </div>
     </div>
-    <div class="footer-disclaimer">
-      <strong>AVISO:</strong> Este es un proyecto académico experimental. Los resultados son generados por inteligencia artificial 
-      basada en documentos oficiales. Ante cualquier duda crítica, consulte siempre con su Director de Carrera o 
-      Secretaría Académica en su sede correspondiente.
+    <hr class="footer-divider" />
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Guía Norte. Todos los derechos reservados.</div>
+      <div class="footer-tag">🔬 Proyecto académico experimental</div>
     </div>
-    <p style="font-size: 0.75rem; opacity: 0.5; margin-top: 2rem;">© 2026 Universidad Privada del Norte - Experiencia Guía Norte</p>
   </footer>
 
   <script>
-    /**
-     * Gestión del inicio del asistente
-     */
-    function startAssistant() {
-      const nameInput = document.getElementById('user-name');
-      const errorMsg = document.getElementById('name-error');
-      const name = nameInput.value.trim();
+    /* ── Navegación mobile ── */
+    function toggleNav() { document.getElementById('mobileNav').classList.toggle('open'); }
+    function closeNav() { document.getElementById('mobileNav').classList.remove('open'); }
 
-      // Validación simple sin usar alert()
-      if (name === "" || name.length < 2) {
-        nameInput.classList.add('error');
-        errorMsg.style.display = 'block';
-        nameInput.focus();
+    /* ── Iniciar asistente con nombre ── */
+    function startAssistant() {
+      const input = document.getElementById('user-name');
+      const errorEl = document.getElementById('name-error');
+      const name = input.value.trim();
+
+      if (name.length < 2) {
+        input.classList.add('error');
+        errorEl.style.display = 'block';
+        input.focus();
         return;
       }
 
-      // Limpieza de errores
-      nameInput.classList.remove('error');
-      errorMsg.style.display = 'none';
+      input.classList.remove('error');
+      errorEl.style.display = 'none';
 
-      // Transición de interfaz
-      document.getElementById('name-request').style.display = 'none';
+      // Mostrar bienvenida
+      document.getElementById('welcome-name').textContent = name.toUpperCase();
+      document.getElementById('name-form').style.display = 'none';
       document.getElementById('agent-area').style.display = 'block';
-      document.getElementById('welcome-msg').innerText = `HOLA, ${name.toUpperCase()}`;
-      
-      // Desplazamiento suave al área de chat
-      document.getElementById('chat').scrollIntoView({ behavior: 'smooth' });
+
+      /*
+       * ══════════════════════════════════════════════════════
+       * INYECCIÓN DINÁMICA DEL WIDGET DE ELEVENLABS
+       *
+       * Se usa override-config para pasar el nombre del usuario
+       * como primer mensaje personalizado del agente.
+       *
+       * Si el agente en ElevenLabs tiene configurado el campo
+       * "First Message", este override-config lo sobreescribirá
+       * con el saludo personalizado.
+       * ══════════════════════════════════════════════════════
+       */
+      const container = document.getElementById('elevenlabs-container');
+
+      const widget = document.createElement('elevenlabs-convai');
+      widget.setAttribute('agent-id', 'agent_0001kpwna0jzfx5rb0drcj689q2k');
+      widget.setAttribute('override-config', JSON.stringify({
+        conversation_config_override: {
+          agent: {
+            first_message: `Hola ${name}, soy el asistente académico Guía Norte. ¿En qué puedo ayudarte hoy?`
+          }
+        }
+      }));
+
+      container.appendChild(widget);
+
+      // Scroll suave al widget
+      document.getElementById('asistente').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Soporte para tecla Enter
-    document.getElementById('user-name').addEventListener('keypress', function (e) {
-      if (e.key === 'Enter') {
-        startAssistant();
-      }
+    document.getElementById('user-name').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') startAssistant();
     });
 
-    // Remover estado de error al escribir
-    document.getElementById('user-name').addEventListener('input', function () {
+    document.getElementById('user-name').addEventListener('input', function() {
       this.classList.remove('error');
       document.getElementById('name-error').style.display = 'none';
     });
+
+    /* ── Sombra del header al scroll ── */
+    window.addEventListener('scroll', () => {
+      document.querySelector('header').style.boxShadow =
+        window.scrollY > 10 ? '0 4px 20px rgba(0,0,0,0.4)' : 'none';
+    });
+
+    /* ── Animación de entrada ── */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card, .benefit-item, .feature-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+      observer.observe(el);
+    });
   </script>
+
 </body>
 </html>
