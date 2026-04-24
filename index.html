@@ -1,583 +1,504 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guía Norte — Asistente Académico UPN</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Norte – Asistente Académico UPN</title>
+<meta name="description" content="Guía Norte: asistente académico experimental para estudiantes de la Universidad Privada del Norte. Consulta grados y títulos, admisión, posgrado e internado de salud.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:#000;background:#fff;line-height:1.6}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+/* ===== VARIABLES ===== */
+:root{
+  --yellow:#FFCD00;
+  --black:#000000;
+  --white:#FFFFFF;
+  --gray:#f5f5f5;
+  --gray2:#e8e8e8;
+  --gray3:#666;
+  --radius:12px;
+  --shadow:0 4px 24px rgba(0,0,0,0.08);
+  --transition:0.25s ease;
+}
 
+/* ===== HEADER ===== */
+header{
+  position:sticky;top:0;z-index:100;
+  background:#000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;height:68px;
+  box-shadow:0 2px 16px rgba(0,0,0,0.3);
+}
+.logo{
+  display:flex;align-items:center;gap:10px;
+  font-weight:800;font-size:1.25rem;color:#fff;text-decoration:none;
+}
+.logo-icon{
+  width:38px;height:38px;background:var(--yellow);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;font-weight:900;color:#000;
+}
+nav{display:flex;align-items:center;gap:8px}
+nav a{
+  color:#ccc;text-decoration:none;font-size:0.9rem;font-weight:500;
+  padding:6px 14px;border-radius:6px;transition:color var(--transition),background var(--transition);
+}
+nav a:hover{color:#fff;background:rgba(255,255,255,0.08)}
+.btn-cta{
+  background:var(--yellow);color:#000;font-weight:700;
+  padding:8px 20px;border-radius:8px;text-decoration:none;font-size:0.9rem;
+  transition:transform var(--transition),box-shadow var(--transition);
+  display:inline-block;
+}
+.btn-cta:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,205,0,0.4)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px}
+.nav-toggle span{display:block;width:24px;height:2px;background:#fff;transition:var(--transition)}
 
+/* ===== HERO ===== */
+#inicio{
+  background:#000;
+  padding:80px 5% 60px;
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+  min-height:calc(100vh - 68px);
+}
+.hero-text h1{
+  font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#fff;line-height:1.15;
+  margin-bottom:20px;
+}
+.hero-text h1 span{color:var(--yellow)}
+.hero-text p{color:#aaa;font-size:1.05rem;margin-bottom:32px;max-width:480px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{
+  background:var(--yellow);color:#000;font-weight:700;
+  padding:14px 28px;border-radius:10px;text-decoration:none;font-size:1rem;
+  transition:transform var(--transition),box-shadow var(--transition);display:inline-block;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(255,205,0,0.45)}
+.btn-secondary{
+  background:transparent;color:#fff;font-weight:600;
+  padding:14px 28px;border-radius:10px;text-decoration:none;font-size:1rem;
+  border:2px solid rgba(255,255,255,0.3);
+  transition:border-color var(--transition),background var(--transition);display:inline-block;
+}
+.btn-secondary:hover{border-color:#fff;background:rgba(255,255,255,0.06)}
 
-  <style>
-    :root {
-      --yellow: #FFCD00;
-      --yellow-dark: #e6b800;
-      --black: #000000;
-      --white: #FFFFFF;
-      --gray: #f4f4f4;
-      --text-gray: #444444;
-      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+/* ===== CHAT CARD ===== */
+.chat-card{
+  background:#111;border-radius:16px;padding:20px;
+  box-shadow:0 8px 40px rgba(255,205,0,0.15);
+  border:1px solid rgba(255,205,0,0.2);
+  max-width:420px;
+}
+.chat-header{
+  display:flex;align-items:center;gap:10px;margin-bottom:18px;
+  padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.chat-avatar{
+  width:40px;height:40px;background:var(--yellow);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+}
+.chat-info h4{color:#fff;font-size:0.9rem;font-weight:600}
+.chat-info p{color:#666;font-size:0.75rem}
+.status-dot{display:inline-block;width:7px;height:7px;background:#22c55e;border-radius:50%;margin-right:4px}
+.chat-msgs{display:flex;flex-direction:column;gap:12px}
+.msg{padding:10px 14px;border-radius:10px;font-size:0.85rem;max-width:90%}
+.msg-bot{background:#1e1e1e;color:#ddd;border-bottom-left-radius:2px}
+.msg-user{background:var(--yellow);color:#000;font-weight:600;align-self:flex-end;border-bottom-right-radius:2px}
+.chat-input-row{
+  display:flex;gap:8px;margin-top:14px;
+  background:#1a1a1a;border-radius:8px;padding:8px 10px;
+}
+.chat-input-row span{flex:1;color:#555;font-size:0.82rem;display:flex;align-items:center}
+.chat-send{
+  background:var(--yellow);border:none;border-radius:6px;
+  padding:6px 12px;font-size:0.82rem;font-weight:700;cursor:pointer;
+}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--white);
-      color: var(--black);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-    a { text-decoration: none; color: inherit; }
+/* ===== SECTIONS COMMON ===== */
+section{padding:80px 5%}
+.section-label{
+  display:inline-block;background:var(--yellow);color:#000;
+  font-weight:700;font-size:0.75rem;padding:4px 12px;border-radius:20px;
+  text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;
+}
+.section-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;margin-bottom:10px}
+.section-sub{color:var(--gray3);font-size:1rem;max-width:560px;margin-bottom:48px}
 
-    /* ── HEADER ── */
-    header {
-      background: var(--black);
-      color: var(--white);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      border-bottom: 5px solid var(--yellow);
-    }
-    .header-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 64px;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 700;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .logo-mark {
-      background: var(--yellow);
-      color: var(--black);
-      width: 40px; height: 40px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: 1rem;
-      flex-shrink: 0;
-    }
-    nav { display: flex; gap: 4px; }
-    nav a {
-      color: rgba(255,255,255,0.6);
-      font-size: 13px; font-weight: 500;
-      padding: 6px 12px;
-      text-transform: uppercase; letter-spacing: 0.5px;
-      transition: color var(--transition), background var(--transition);
-    }
-    nav a:hover { color: var(--white); background: rgba(255,255,255,0.08); }
-    .header-tag { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.35); letter-spacing: 1.5px; text-transform: uppercase; }
-    .nav-toggle {
-      display: none; background: none; border: none; cursor: pointer;
-      flex-direction: column; gap: 5px; padding: 4px;
-    }
-    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--white); }
+/* ===== CONSULTAS ===== */
+#consultas{background:var(--gray)}
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:20px;
+}
+.card{
+  background:#fff;border-radius:var(--radius);padding:28px 24px;
+  box-shadow:var(--shadow);border:1px solid var(--gray2);
+  transition:transform var(--transition),box-shadow var(--transition);
+  cursor:default;
+}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 36px rgba(0,0,0,0.12)}
+.card-icon{
+  width:52px;height:52px;background:var(--yellow);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:16px;
+}
+.card h3{font-size:1rem;font-weight:700;margin-bottom:8px}
+.card p{font-size:0.875rem;color:var(--gray3)}
 
-    /* ── MOBILE NAV ── */
-    .mobile-nav { display: none; flex-direction: column; background: #111; border-top: 1px solid rgba(255,255,255,0.08); padding: 12px 24px; gap: 2px; }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a { color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 500; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); text-transform: uppercase; }
-    .mobile-nav a:last-child { border-bottom: none; }
+/* ===== AGENTE ELEVENLABS ===== */
+#asistente{background:#000}
+.agent-wrapper{max-width:900px;margin:0 auto;text-align:center;}
+.agent-wrapper .section-label{background:rgba(255,205,0,0.15);color:var(--yellow)}
+.agent-wrapper .section-title{color:#fff}
+.agent-wrapper .section-sub{color:#888;margin:0 auto 40px}
 
-    /* ── HERO ── */
-    .hero {
-      background: var(--yellow);
-      padding: 80px 24px;
-      text-align: center;
-      border-bottom: 4px solid var(--black);
-    }
-    .hero h1 {
-      font-size: clamp(2.8rem, 8vw, 5.5rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      line-height: 0.9;
-      letter-spacing: -3px;
-      margin-bottom: 20px;
-    }
-    .hero p {
-      max-width: 600px;
-      margin: 0 auto 32px;
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: rgba(0,0,0,0.75);
-    }
-    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+/* Pasos de instrucción */
+.steps-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  margin-bottom:40px;
+}
+.step{
+  background:#111;border-radius:14px;padding:24px 18px;
+  border:1px solid rgba(255,255,255,0.06);
+  text-align:center;
+}
+.step-num{
+  width:36px;height:36px;background:var(--yellow);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:1rem;color:#000;margin:0 auto 12px;
+}
+.step h4{color:#fff;font-size:0.9rem;font-weight:700;margin-bottom:6px}
+.step p{color:#666;font-size:0.8rem;line-height:1.5}
 
-    /* ── BOTONES ── */
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 28px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.8px;
-      cursor: pointer; border: 2px solid var(--black);
-      transition: transform 0.1s ease, box-shadow 0.15s ease;
-    }
-    .btn:hover { transform: translate(-3px, -3px); box-shadow: 4px 4px 0 var(--black); }
-    .btn:active { transform: translate(0,0); box-shadow: none; }
-    .btn-dark { background: var(--black); color: var(--white); }
-    .btn-outline { background: transparent; color: var(--black); }
+/* Preview / CTA */
+.widget-preview{
+  background:#111;border-radius:20px;
+  border:2px solid rgba(255,205,0,0.3);
+  padding:36px 28px;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+  position:relative;
+  box-shadow:0 0 60px rgba(255,205,0,0.08);
+}
+.widget-preview::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(255,205,0,0.1),transparent 70%);
+  pointer-events:none;
+}
+.sofia-avatar{
+  width:80px;height:80px;background:var(--yellow);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;position:relative;
+}
+.sofia-pulse{
+  position:absolute;inset:-4px;border-radius:50%;
+  border:3px solid var(--yellow);opacity:0;
+  animation:pulse-ring 2s ease-out infinite;
+}
+@keyframes pulse-ring{
+  0%{transform:scale(1);opacity:0.7}
+  100%{transform:scale(1.5);opacity:0}
+}
+.sofia-name{color:#fff;font-weight:700;font-size:1.1rem}
+.sofia-desc{color:#888;font-size:0.85rem}
+.widget-cta{
+  background:var(--yellow);color:#000;font-weight:700;
+  padding:14px 32px;border-radius:50px;border:none;cursor:pointer;
+  font-size:1rem;display:flex;align-items:center;gap:10px;
+  transition:transform var(--transition),box-shadow var(--transition);
+  animation:bounce-cta 2s ease-in-out infinite;
+}
+.widget-cta:hover{transform:scale(1.05);box-shadow:0 8px 28px rgba(255,205,0,0.45);animation:none}
+@keyframes bounce-cta{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+.arrow-hint{
+  display:flex;align-items:center;gap:8px;
+  color:var(--yellow);font-size:0.82rem;font-weight:600;
+  margin-top:4px;
+}
+.arrow-hint svg{animation:arrow-anim 1.2s ease-in-out infinite}
+@keyframes arrow-anim{
+  0%,100%{transform:translate(0,0)}
+  50%{transform:translate(6px,6px)}
+}
 
-    /* ── SECCIONES ── */
-    .section { padding: 80px 24px; max-width: 1200px; margin: 0 auto; }
-    .section-label {
-      display: inline-block; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-gray);
-      border-left: 3px solid var(--yellow); padding-left: 10px; margin-bottom: 16px;
-    }
-    .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; text-transform: uppercase; letter-spacing: -1px; line-height: 1.05; margin-bottom: 16px; }
-    .section-sub { font-size: 16px; color: var(--text-gray); max-width: 540px; line-height: 1.65; }
+@media(max-width:640px){
+  .steps-row{grid-template-columns:1fr}
+}
 
-    /* ── CONSULTAS ── */
-    .consultas-bg { background: var(--gray); border-top: 3px solid var(--black); border-bottom: 3px solid var(--black); }
-    .grid-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
-    .card {
-      background: var(--white); border: 2px solid var(--black);
-      padding: 28px 24px; position: relative; transition: transform var(--transition); cursor: default;
-    }
-    .card::after {
-      content: ""; position: absolute; bottom: -8px; right: -8px;
-      width: 100%; height: 100%; background: var(--yellow); border: 2px solid var(--black); z-index: -1;
-      transition: all var(--transition);
-    }
-    .card:hover { transform: translate(-4px, -4px); }
-    .card:hover::after { bottom: -12px; right: -12px; }
-    .card-icon { font-size: 28px; margin-bottom: 14px; }
-    .card-title { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-    .card-desc { font-size: 13.5px; color: var(--text-gray); line-height: 1.55; }
+/* ===== BENEFICIOS ===== */
+#beneficios{background:#fff}
+.benefits-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;
+  margin-top:0;
+}
+.benefit{
+  text-align:center;padding:36px 24px;
+  background:var(--gray);border-radius:var(--radius);
+  transition:transform var(--transition);
+}
+.benefit:hover{transform:translateY(-4px)}
+.benefit-icon{
+  width:64px;height:64px;background:#000;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;margin:0 auto 18px;
+}
+.benefit h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.benefit p{font-size:0.875rem;color:var(--gray3)}
 
-    /* ── SECCIÓN ASISTENTE ── */
-    .chat-section { background: var(--black); color: var(--white); border-top: 4px solid var(--yellow); border-bottom: 4px solid var(--yellow); }
-    .chat-section .section-label { color: rgba(255,255,255,0.4); border-color: var(--yellow); }
-    .chat-section .section-title { color: var(--white); }
-    .chat-section .section-sub { color: rgba(255,255,255,0.55); }
-    .chat-inner {
-      display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start;
-      max-width: 1200px; margin: 0 auto; padding: 80px 24px;
-    }
-    .features-list { display: flex; flex-direction: column; gap: 16px; margin-top: 36px; }
-    .feature-item {
-      display: flex; gap: 14px; align-items: flex-start;
-      padding: 16px; border: 1px solid rgba(255,255,255,0.08);
-      transition: border-color var(--transition), background var(--transition);
-    }
-    .feature-item:hover { border-color: rgba(255,205,0,0.3); background: rgba(255,205,0,0.04); }
-    .feat-icon { width: 38px; height: 38px; background: rgba(255,205,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-    .feat-text strong { font-size: 14px; font-weight: 700; display: block; margin-bottom: 3px; color: var(--white); text-transform: uppercase; letter-spacing: 0.3px; }
-    .feat-text span { font-size: 13px; color: rgba(255,255,255,0.5); }
+/* ===== AVISO ===== */
+#aviso{background:var(--yellow);padding:56px 5%}
+.aviso-inner{
+  max-width:760px;margin:0 auto;
+  display:flex;gap:20px;align-items:flex-start;
+}
+.aviso-icon{font-size:2.5rem;flex-shrink:0;margin-top:4px}
+.aviso-text h2{font-size:1.3rem;font-weight:800;margin-bottom:10px;color:#000}
+.aviso-text p{font-size:0.95rem;color:#333;line-height:1.7}
 
-    /* ── WIDGET BOX ── */
-    .widget-box { background: #0d0d0d; border: 2px solid var(--yellow); }
-    .widget-box-header {
-      background: var(--yellow); color: var(--black);
-      padding: 14px 20px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .widget-box-header-left { display: flex; align-items: center; gap: 10px; }
-    .widget-box-icon { width: 32px; height: 32px; background: var(--black); display: flex; align-items: center; justify-content: center; font-size: 16px; }
-    .widget-box-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-    .widget-box-subtitle { font-size: 11px; font-weight: 500; opacity: 0.7; }
-    .status-pill { display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.15); padding: 4px 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-    .status-dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; }
-    .widget-body { padding: 28px 24px; }
+/* ===== FOOTER ===== */
+footer{
+  background:#000;color:#555;text-align:center;
+  padding:36px 5%;font-size:0.85rem;
+}
+footer strong{color:#fff}
+footer .footer-line{margin-top:6px;font-size:0.78rem}
 
-    /* ── FORMULARIO NOMBRE ── */
-    #name-form { text-align: center; }
-    #name-form h3 { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--yellow); margin-bottom: 8px; }
-    #name-form p { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 24px; line-height: 1.55; }
-    .form-group { display: flex; flex-direction: column; gap: 10px; }
-    .input-name {
-      width: 100%; padding: 14px 16px;
-      background: #1a1a1a; border: 2px solid #333;
-      color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px;
-      outline: none; transition: border-color var(--transition);
-    }
-    .input-name::placeholder { color: rgba(255,255,255,0.3); }
-    .input-name:focus { border-color: var(--yellow); }
-    .input-name.error { border-color: #ff4444; }
-    .error-msg { color: #ff6666; font-size: 12px; font-weight: 600; text-align: left; display: none; }
-    .btn-start {
-      width: 100%; padding: 15px;
-      background: var(--yellow); color: var(--black);
-      font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 1px; border: none; cursor: pointer;
-      transition: background var(--transition), transform 0.1s ease;
-    }
-    .btn-start:hover { background: #ffd519; }
-    .btn-start:active { transform: scale(0.98); }
-
-    /* ── ÁREA DEL AGENTE ── */
-    #agent-area { display: none; animation: fadeIn 0.45s ease both; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-    .welcome-banner {
-      background: rgba(255,205,0,0.08); border: 1px solid rgba(255,205,0,0.2);
-      padding: 12px 16px; margin-bottom: 20px;
-    }
-    .welcome-banner span { font-size: 13px; font-weight: 600; color: var(--yellow); text-transform: uppercase; letter-spacing: 0.5px; }
-    .widget-hint { margin-top: 16px; font-size: 12px; color: rgba(255,255,255,0.35); text-align: center; text-transform: uppercase; letter-spacing: 0.8px; }
-    elevenlabs-convai { display: block; margin: 0 auto; }
-
-    /* ── BENEFICIOS ── */
-    .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 2px solid var(--black); margin-top: 48px; }
-    .benefit-item { padding: 36px 28px; border-right: 2px solid var(--black); transition: background var(--transition); }
-    .benefit-item:last-child { border-right: none; }
-    .benefit-item:hover { background: #fffbdc; }
-    .benefit-num { font-size: 3rem; font-weight: 900; color: var(--yellow); line-height: 1; margin-bottom: 12px; -webkit-text-stroke: 2px var(--black); }
-    .benefit-title { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 10px; }
-    .benefit-desc { font-size: 13.5px; color: var(--text-gray); line-height: 1.6; }
-
-    /* ── AVISO ── */
-    .aviso-section { background: #fffbde; border-top: 3px solid #e6d000; border-bottom: 3px solid #e6d000; }
-    .aviso-box { max-width: 780px; margin: 0 auto; display: flex; gap: 20px; align-items: flex-start; padding: 40px 24px; }
-    .aviso-icon { font-size: 32px; flex-shrink: 0; margin-top: 2px; }
-    .aviso-text h3 { font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; color: #5c4a00; }
-    .aviso-text p { font-size: 15px; color: #7a6200; line-height: 1.65; }
-
-    /* ── FOOTER ── */
-    footer { background: var(--black); color: rgba(255,255,255,0.5); padding: 48px 24px 32px; border-top: 5px solid var(--yellow); }
-    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-    .footer-logo { display: flex; align-items: center; gap: 10px; color: var(--white); font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 1px; }
-    .footer-logo-mark { width: 30px; height: 30px; background: var(--yellow); color: var(--black); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; }
-    .footer-links { display: flex; gap: 20px; }
-    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.5px; transition: color var(--transition); }
-    .footer-links a:hover { color: rgba(255,255,255,0.8); }
-    .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 28px auto; max-width: 1200px; }
-    .footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .footer-copy { font-size: 12px; }
-    .footer-tag { background: rgba(255,205,0,0.1); border: 1px solid rgba(255,205,0,0.2); padding: 4px 12px; font-size: 11px; color: #ffd94d; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 960px) {
-      .chat-inner { grid-template-columns: 1fr; gap: 40px; }
-      .grid-cards { grid-template-columns: repeat(2, 1fr); }
-      .benefits-grid { grid-template-columns: 1fr; }
-      .benefit-item { border-right: none; border-bottom: 2px solid var(--black); }
-      .benefit-item:last-child { border-bottom: none; }
-      nav { display: none; }
-      .nav-toggle { display: flex; }
-      .header-tag { display: none; }
-    }
-    @media (max-width: 600px) {
-      .grid-cards { grid-template-columns: 1fr; }
-      .aviso-box { flex-direction: column; gap: 12px; }
-      .footer-inner { flex-direction: column; align-items: flex-start; }
-    }
-  </style>
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  #inicio{grid-template-columns:1fr;text-align:center;padding-top:60px}
+  .hero-text p{margin-left:auto;margin-right:auto}
+  .hero-btns{justify-content:center}
+  .chat-card{margin:0 auto;max-width:100%}
+  nav{display:none;position:absolute;top:68px;left:0;right:0;
+    background:#000;flex-direction:column;padding:16px 5%;gap:4px}
+  nav.open{display:flex}
+  nav a{padding:10px 0}
+  .nav-toggle{display:flex}
+  .aviso-inner{flex-direction:column}
+}
+</style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="header-inner">
-      <a href="#inicio" class="logo">
-        <div class="logo-mark">GN</div>
-        Guía Norte
-      </a>
-      <nav>
-        <a href="#inicio">Inicio</a>
-        <a href="#consultas">Consultas</a>
-        <a href="#asistente">Asistente</a>
-        <a href="#aviso">Aviso</a>
-      </nav>
-      <div class="header-tag">Proyecto 2026</div>
-      <button class="nav-toggle" aria-label="Menú" onclick="toggleNav()">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-    <nav class="mobile-nav" id="mobileNav">
-      <a href="#inicio" onclick="closeNav()">Inicio</a>
-      <a href="#consultas" onclick="closeNav()">Consultas frecuentes</a>
-      <a href="#asistente" onclick="closeNav()">Asistente</a>
-      <a href="#aviso" onclick="closeNav()">Aviso legal</a>
-    </nav>
-  </header>
+<!-- ===== HEADER ===== -->
+<header>
+  <a href="#inicio" class="logo">
+    <div class="logo-icon">GN</div>
+    Guía Norte
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+  <nav id="mainNav">
+    <a href="#inicio">Inicio</a>
+    <a href="#consultas">Consultas</a>
+    <a href="#asistente">Asistente</a>
+    <a href="#aviso">Aviso</a>
+    <a href="#asistente" class="btn-cta">Hablar con el asistente</a>
+  </nav>
+</header>
 
-  <!-- HERO -->
-  <section class="hero" id="inicio">
-    <h1>Tu asistente<br/>académico</h1>
+<!-- ===== HERO ===== -->
+<section id="inicio">
+  <div class="hero-text">
+    <span class="section-label">Asistente Académico</span>
+    <h1>Tu <span>guía académica</span><br>universitaria</h1>
     <p>Consulta información general sobre reglamentos, trámites, matrícula, vida académica y canales de orientación estudiantil.</p>
-    <div class="hero-actions">
-      <a href="#asistente" class="btn btn-dark">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-        Iniciar consulta
-      </a>
-      <a href="#consultas" class="btn btn-outline">Ver consultas frecuentes</a>
-    </div>
-  </section>
-
-  <!-- CONSULTAS FRECUENTES -->
-  <div class="consultas-bg" id="consultas">
-    <div class="section">
-      <span class="section-label">¿Qué puedes consultar?</span>
-      <h2 class="section-title">Consultas frecuentes</h2>
-      <p class="section-sub">El asistente puede orientarte sobre estas áreas de la vida académica universitaria.</p>
-      <div class="grid-cards">
-        <div class="card"><div class="card-icon">📋</div><div class="card-title">Reglamentos académicos</div><div class="card-desc">Normas, políticas de evaluación, asistencia y conducta estudiantil.</div></div>
-        <div class="card"><div class="card-icon">📝</div><div class="card-title">Matrícula</div><div class="card-desc">Procesos de matrícula regular, reincorporaciones y cambios de carrera.</div></div>
-        <div class="card"><div class="card-icon">🗂️</div><div class="card-title">Trámites</div><div class="card-desc">Constancias, certificados, validaciones y otros trámites administrativos.</div></div>
-        <div class="card"><div class="card-icon">💳</div><div class="card-title">Pagos y servicios</div><div class="card-desc">Cronogramas de pago, becas, beneficios y convenios disponibles.</div></div>
-        <div class="card"><div class="card-icon">📚</div><div class="card-title">Biblioteca</div><div class="card-desc">Acceso a recursos bibliográficos, bases de datos y préstamos digitales.</div></div>
-        <div class="card"><div class="card-icon">📞</div><div class="card-title">Canales de atención</div><div class="card-desc">Soporte académico, psicopedagógico y administrativo oficial.</div></div>
-      </div>
+    <div class="hero-btns">
+      <a href="#asistente" class="btn-primary">&#9654; Iniciar consulta</a>
+      <a href="#consultas" class="btn-secondary">Ver consultas frecuentes</a>
     </div>
   </div>
-
-  <!-- SECCIÓN ASISTENTE -->
-  <section class="chat-section" id="asistente">
-    <div class="chat-inner">
-
-      <!-- Izquierda: info -->
-      <div>
-        <span class="section-label">Asistente por voz y texto</span>
-        <h2 class="section-title">Habla con<br/>el asistente</h2>
-        <p class="section-sub">Ingresa tu nombre e inicia una sesión personalizada. Consulta por voz o texto desde cualquier dispositivo.</p>
-        <div class="features-list">
-          <div class="feature-item">
-            <div class="feat-icon">⚡</div>
-            <div class="feat-text">
-              <strong>Respuestas rápidas</strong>
-              <span>Sin filas ni esperas. Orientación inmediata.</span>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feat-icon">🎯</div>
-            <div class="feat-text">
-              <strong>Orientación centralizada</strong>
-              <span>Múltiples áreas académicas en un solo lugar.</span>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feat-icon">📱</div>
-            <div class="feat-text">
-              <strong>Desde cualquier dispositivo</strong>
-              <span>Disponible en computadora, tablet o celular.</span>
-            </div>
-          </div>
-        </div>
+  <div class="chat-card">
+    <div class="chat-header">
+      <div class="chat-avatar">&#127891;</div>
+      <div class="chat-info">
+        <h4>Guía Norte</h4>
+        <p><span class="status-dot"></span>En línea · Asistente experimental</p>
       </div>
-
-      <!-- Derecha: widget -->
-      <div class="widget-box">
-        <div class="widget-box-header">
-          <div class="widget-box-header-left">
-            <div class="widget-box-icon">🎓</div>
-            <div>
-              <div class="widget-box-title">Guía Norte</div>
-              <div class="widget-box-subtitle">Asistente académico</div>
-            </div>
-          </div>
-          <div class="status-pill">
-            <div class="status-dot"></div>
-            En línea
-          </div>
-        </div>
-
-        <div class="widget-body">
-
-          <!-- PASO 1: Formulario de nombre -->
-          <div id="name-form">
-            <h3>Identificación</h3>
-            <p>Ingresa tu nombre para iniciar la sesión y personalizar tu consulta.</p>
-            <div class="form-group">
-              <input
-                type="text"
-                id="user-name"
-                class="input-name"
-                placeholder="Escribe tu nombre..."
-                autocomplete="off"
-                maxlength="60"
-              />
-              <div id="name-error" class="error-msg">Por favor ingresa un nombre válido (mínimo 2 caracteres).</div>
-              <button class="btn-start" onclick="startAssistant()">
-                Acceder al asistente →
-              </button>
-            </div>
-          </div>
-
-          <!-- PASO 2: Área del agente -->
-          <div id="agent-area">
-            <div class="welcome-banner">
-              <span>👋 Hola, <span id="welcome-name"></span> — ¿en qué te ayudo hoy?</span>
-            </div>
-
-            <!--
-              El widget se inyecta aquí dinámicamente.
-              El nombre del usuario se pasa via override-config > first_message
-              para que el agente lo salude por su nombre al iniciar.
-            -->
-            <div id="elevenlabs-container"></div>
-
-            <div class="widget-hint">Presiona el botón del widget para hablar</div>
-          </div>
-
-        </div>
-      </div>
-
     </div>
-  </section>
-
-  <!-- BENEFICIOS -->
-  <div style="max-width:1200px; margin:0 auto; padding: 80px 24px;" id="beneficios">
-    <span class="section-label">¿Por qué usar Guía Norte?</span>
-    <h2 class="section-title">Diseñado para orientarte</h2>
-    <div class="benefits-grid">
-      <div class="benefit-item">
-        <div class="benefit-num">01</div>
-        <div class="benefit-title">Respuestas rápidas</div>
-        <div class="benefit-desc">Orientación inmediata sin esperar turnos. Disponible cuando lo necesitas, todos los días.</div>
-      </div>
-      <div class="benefit-item">
-        <div class="benefit-num">02</div>
-        <div class="benefit-title">Orientación centralizada</div>
-        <div class="benefit-desc">Reglamentos, trámites, matrícula y más: toda la información académica general en un solo lugar.</div>
-      </div>
-      <div class="benefit-item">
-        <div class="benefit-num">03</div>
-        <div class="benefit-title">Cualquier dispositivo</div>
-        <div class="benefit-desc">Accede desde tu computadora, tableta o teléfono. Completamente responsive y optimizada para móvil.</div>
-      </div>
+    <div class="chat-msgs">
+      <div class="msg msg-bot">¡Hola! Soy Guía Norte. ¿En qué puedo ayudarte hoy?</div>
+      <div class="msg msg-user">¿Cuáles son las fechas de matrícula?</div>
+      <div class="msg msg-bot">Las fechas de matrícula varían por ciclo. Te recomiendo revisar el portal oficial de UPN para información actualizada. ¿Necesitas algo más?</div>
+    </div>
+    <div class="chat-input-row">
+      <span>Escribe tu consulta...</span>
+      <button class="chat-send">Enviar</button>
     </div>
   </div>
+</section>
 
-  <!-- AVISO IMPORTANTE -->
-  <div class="aviso-section" id="aviso">
-    <div class="aviso-box">
-      <div class="aviso-icon">⚠️</div>
-      <div class="aviso-text">
-        <h3>Aviso importante</h3>
-        <p>Este asistente es un <strong>proyecto académico experimental</strong>. No representa un canal oficial de la Universidad Privada del Norte. La información proporcionada es de carácter orientativo y general. Para decisiones finales, el estudiante debe validar la información en los <strong>canales oficiales de la universidad</strong>.</p>
-      </div>
+<!-- ===== CONSULTAS FRECUENTES ===== -->
+<section id="consultas">
+  <span class="section-label">¿Qué puedo consultar?</span>
+  <h2 class="section-title">Áreas de conocimiento</h2>
+  <p class="section-sub">El asistente está especializado en las siguientes áreas académicas de la Universidad Privada del Norte.</p>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">&#127891;</div>
+      <h3>Grados y Títulos</h3>
+      <p>Procesos para bachiller, titulación profesional, jurados de sustentación y duplicados de diplomas.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#128221;</div>
+      <h3>Admisión Pregrado</h3>
+      <p>Requisitos de ingreso ordinario, becas de excelencia, traslados externos y procesos de matrícula.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#127979;</div>
+      <h3>Posgrado y Continua</h3>
+      <p>Lineamientos para maestrías, diplomados de especialización y beneficios para colaboradores y egresados.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#129657;</div>
+      <h3>Internado de Salud</h3>
+      <p>Prácticas preprofesionales, campos clínicos, derechos y deberes del interno en Ciencias de la Salud.</p>
     </div>
   </div>
+  <p style="margin-top:24px;font-size:0.85rem;color:var(--gray3);text-align:center;">&#9432; El asistente responde únicamente sobre estas 4 áreas. Para otros temas, consulta los canales oficiales de UPN.</p>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-logo">
-        <div class="footer-logo-mark">GN</div>
-        Guía Norte
+<!-- ===== AGENTE ELEVENLABS ===== -->
+<section id="asistente">
+  <div class="agent-wrapper">
+    <span class="section-label">Asistente IA</span>
+    <h2 class="section-title">Habla con Sofía</h2>
+    <p class="section-sub">Tu asistente académica virtual. Disponible ahora para responder tus dudas sobre grados, admisión, posgrado e internado.</p>
+
+    <!-- Pasos de instrucción -->
+    <div class="steps-row">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Busca el botón</h4>
+        <p>Encontrarás el botón de Sofía en la esquina inferior derecha de esta pantalla.</p>
       </div>
-      <div class="footer-links">
-        <a href="#inicio">Inicio</a>
-        <a href="#consultas">Consultas</a>
-        <a href="#asistente">Asistente</a>
-        <a href="#aviso">Aviso</a>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Haz clic en "Start a call"</h4>
+        <p>Presiona el botón para iniciar la conversación por voz con Sofía.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Haz tu consulta</h4>
+        <p>Sofía te pedirá tu nombre y luego responderá tus dudas académicas.</p>
       </div>
     </div>
-    <hr class="footer-divider" />
-    <div class="footer-bottom">
-      <div class="footer-copy">© 2026 Guía Norte. Todos los derechos reservados.</div>
-      <div class="footer-tag">🔬 Proyecto académico experimental</div>
+
+    <!-- Vista previa del asistente + CTA -->
+    <div class="widget-preview">
+      <div class="sofia-avatar">
+        &#127891;
+        <div class="sofia-pulse"></div>
+      </div>
+      <div class="sofia-name">Sofía · Asistente Académica</div>
+      <div class="sofia-desc">&#x25CF; Disponible ahora &nbsp;|&nbsp; Responde en español</div>
+      <button class="widget-cta" onclick="document.querySelector('elevenlabs-convai')?.shadowRoot?.querySelector('button')?.click()" aria-label="Iniciar llamada con Sofía">
+        <span>&#128222;</span> Iniciar llamada con Sofía
+      </button>
+      <div class="arrow-hint">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFCD00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="7" y1="7" x2="17" y2="17"/><polyline points="17 7 17 17 7 17"/>
+        </svg>
+        O presiona el botón flotante en la esquina inferior derecha
+      </div>
     </div>
-  </footer>
 
-  <script>
-    /* ── Navegación mobile ── */
-    function toggleNav() { document.getElementById('mobileNav').classList.toggle('open'); }
-    function closeNav() { document.getElementById('mobileNav').classList.remove('open'); }
+  </div>
 
-    /* ── Iniciar asistente con nombre ── */
-    function startAssistant() {
-      const input = document.getElementById('user-name');
-      const errorEl = document.getElementById('name-error');
-      const name = input.value.trim();
+  <!-- ============================================================ -->
+  <!-- WIDGET DE ELEVENLABS – AGENTE SOFÍA / GUÍA NORTE            -->
+  <!-- Agent ID: agent_0001kpwna0jzfx5rb0drcj689q2k               -->
+  <!-- ============================================================ -->
+  <elevenlabs-convai agent-id="agent_0001kpwna0jzfx5rb0drcj689q2k"></elevenlabs-convai>
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
 
-      if (name.length < 2) {
-        input.classList.add('error');
-        errorEl.style.display = 'block';
-        input.focus();
-        return;
+</section>
+
+<!-- ===== BENEFICIOS ===== -->
+<section id="beneficios">
+  <span class="section-label">¿Por qué usar Guía Norte?</span>
+  <h2 class="section-title">¿Por qué usar el asistente?</h2>
+  <p class="section-sub">Diseñado para facilitar tu experiencia académica con orientación rápida y centralizada.</p>
+  <div class="benefits-grid">
+    <div class="benefit">
+      <div class="benefit-icon">&#9889;</div>
+      <h3>Respuestas rápidas</h3>
+      <p>Obtén orientación inmediata sin esperar en filas ni navegar entre páginas.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">&#127760;</div>
+      <h3>Orientación centralizada</h3>
+      <p>Accede a información sobre múltiples áreas académicas desde un solo lugar.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">&#128241;</div>
+      <h3>Disponible en cualquier dispositivo</h3>
+      <p>Funciona en computadoras, tablets y smartphones con diseño responsive.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AVISO IMPORTANTE ===== -->
+<section id="aviso">
+  <div class="aviso-inner">
+    <div class="aviso-icon">&#9888;&#65039;</div>
+    <div class="aviso-text">
+      <h2>Aviso importante</h2>
+      <p>
+        Este asistente es un <strong>proyecto académico experimental</strong>.
+        No representa un canal oficial de la Universidad Privada del Norte.
+        Para decisiones finales, el estudiante debe validar la información
+        en los <strong>canales oficiales de la universidad</strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <strong>Guía Norte</strong> · Asistente Académico Experimental<br>
+  <span class="footer-line">&#169; 2026 · Proyecto académico experimental · No es un canal oficial de UPN</span>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+  // Toggle menú móvil
+  const toggle = document.getElementById('navToggle');
+  const nav = document.getElementById('mainNav');
+  toggle.addEventListener('click', () => nav.classList.toggle('open'));
+
+  // Cerrar menú al hacer clic en un enlace
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => nav.classList.remove('open'));
+  });
+
+  // Animación de entrada suave para las secciones
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
       }
-
-      input.classList.remove('error');
-      errorEl.style.display = 'none';
-
-      // Mostrar bienvenida
-      document.getElementById('welcome-name').textContent = name.toUpperCase();
-      document.getElementById('name-form').style.display = 'none';
-      document.getElementById('agent-area').style.display = 'block';
-
-      const container = document.getElementById('elevenlabs-container');
-
-      function insertWidget() {
-        const widget = document.createElement('elevenlabs-convai');
-        widget.setAttribute('agent-id', 'agent_0001kpwna0jzfx5rb0drcj689q2k');
-        widget.setAttribute('override-config', JSON.stringify({
-          conversation_config_override: {
-            agent: {
-              first_message: `Hola ${name}, soy el asistente académico Guía Norte. ¿En qué puedo ayudarte hoy?`
-            }
-          }
-        }));
-        container.innerHTML = '';
-        container.appendChild(widget);
-      }
-
-      /*
-       * El script de ElevenLabs se carga con "async", por lo que el
-       * custom element <elevenlabs-convai> puede no estar registrado
-       * todavía cuando el usuario pulsa el botón.
-       * customElements.whenDefined() espera hasta que esté listo
-       * antes de insertar el widget, evitando que aparezca vacío.
-       */
-      if (customElements.get('elevenlabs-convai')) {
-        insertWidget();
-      } else {
-        customElements.whenDefined('elevenlabs-convai').then(insertWidget);
-      }
-
-      // Scroll suave al widget
-      document.getElementById('asistente').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    document.getElementById('user-name').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') startAssistant();
     });
+  }, { threshold: 0.1 });
 
-    document.getElementById('user-name').addEventListener('input', function() {
-      this.classList.remove('error');
-      document.getElementById('name-error').style.display = 'none';
-    });
-
-    /* ── Sombra del header al scroll ── */
-    window.addEventListener('scroll', () => {
-      document.querySelector('header').style.boxShadow =
-        window.scrollY > 10 ? '0 4px 20px rgba(0,0,0,0.4)' : 'none';
-    });
-
-    /* ── Animación de entrada ── */
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.card, .benefit-item, .feature-item').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
-      observer.observe(el);
-    });
-  </script>
-
-  <!--
-    Script de ElevenLabs al final del body (sin async) para asegurar
-    que el custom element quede registrado antes de que el usuario interactúe.
-  -->
-  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" type="text/javascript"></script>
+  document.querySelectorAll('.card, .benefit').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
 
 </body>
 </html>
