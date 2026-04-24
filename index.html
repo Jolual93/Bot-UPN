@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía Norte — Asistente Académico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── VARIABLES ─────────────────────────────────────────────── */
+    :root {
+      --yellow: #FFCD00;
+      --yellow-dark: #e6b800;
+      --black: #000000;
+      --white: #FFFFFF;
+      --gray-100: #f7f7f5;
+      --gray-200: #ebebea;
+      --gray-400: #9b9b96;
+      --gray-600: #4a4a47;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --shadow-card: 0 2px 12px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-hover: 0 8px 28px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.07);
+      --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+
+    /* ─── UTILITIES ──────────────────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section { padding: 88px 0; }
+    .section-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.15;
+      font-weight: 400;
+      color: var(--black);
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 17px;
+      color: var(--gray-600);
+      max-width: 560px;
+      line-height: 1.65;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+      line-height: 1;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--yellow);
+      color: var(--black);
+      box-shadow: 0 2px 0 var(--yellow-dark);
+    }
+    .btn-primary:hover {
+      background: #ffd519;
+      box-shadow: 0 4px 14px rgba(255,205,0,0.45);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--black);
+      border: 1.5px solid #d0d0cc;
+    }
+    .btn-outline:hover {
+      border-color: var(--black);
+      box-shadow: var(--shadow-hover);
+    }
+    .btn-dark {
+      background: var(--black);
+      color: var(--white);
+    }
+    .btn-dark:hover {
+      background: #222;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    }
+
+    /* ─── HEADER ─────────────────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+    }
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      background: var(--yellow);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--black);
+      font-family: 'DM Serif Display', serif;
+      flex-shrink: 0;
+    }
+    nav { display: flex; align-items: center; gap: 6px; }
+    nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-600);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: color var(--transition), background var(--transition);
+    }
+    nav a:hover { color: var(--black); background: var(--gray-100); }
+    .header-cta { display: flex; align-items: center; gap: 10px; }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--black);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* ─── HERO ───────────────────────────────────────────────────── */
+    .hero {
+      padding: 80px 0 72px;
+      background: var(--white);
+      overflow: hidden;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fffbde;
+      border: 1px solid #f0e060;
+      padding: 5px 12px 5px 7px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #7a6000;
+      margin-bottom: 24px;
+    }
+    .hero-badge-dot {
+      width: 20px;
+      height: 20px;
+      background: var(--yellow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 5.5vw, 58px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gray-600);
+    }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--gray-600);
+      line-height: 1.65;
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* Chat card */
+    .chat-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-hover);
+      position: relative;
+    }
+    .chat-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--gray-200);
+      margin-bottom: 18px;
+    }
+    .chat-avatar {
+      width: 36px;
+      height: 36px;
+      background: var(--yellow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .chat-name { font-size: 14px; font-weight: 600; }
+    .chat-status {
+      font-size: 12px;
+      color: var(--gray-400);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #22c55e;
+      border-radius: 50%;
+    }
+    .chat-messages { display: flex; flex-direction: column; gap: 12px; }
+    .msg {
+      display: flex;
+      gap: 8px;
+      animation: fadeUp 0.4s ease both;
+    }
+    .msg-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      margin-top: 2px;
+    }
+    .msg-avatar.bot { background: var(--yellow); }
+    .msg-avatar.user { background: var(--black); color: var(--white); }
+    .msg-bubble {
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      max-width: 260px;
+    }
+    .msg-bubble.bot {
+      background: var(--gray-100);
+      border-bottom-left-radius: 4px;
+    }
+    .msg-bubble.user {
+      background: var(--black);
+      color: var(--white);
+      border-bottom-right-radius: 4px;
+      margin-left: auto;
+    }
+    .msg.user { flex-direction: row-reverse; }
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding: 10px 14px;
+      background: var(--gray-100);
+      border-radius: 14px;
+      border-bottom-left-radius: 4px;
+      width: fit-content;
+    }
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gray-400);
+      border-radius: 50%;
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-5px); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--gray-200);
+    }
+    .chat-input-fake {
+      flex: 1;
+      background: var(--gray-100);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--gray-400);
+    }
+    .chat-send {
+      width: 36px;
+      height: 36px;
+      background: var(--yellow);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+      flex-shrink: 0;
+    }
+
+    /* ─── CONSULTAS FRECUENTES ───────────────────────────────────── */
+    .consultas { background: var(--gray-100); }
+    .consultas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 28px 24px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--gray-200);
+      transition: transform var(--transition), box-shadow var(--transition);
+      cursor: default;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: #fffbde;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .card-desc { font-size: 14px; color: var(--gray-600); line-height: 1.55; }
+
+    /* ─── AGENTE ELEVENLABS ──────────────────────────────────────── */
+    .agente { background: var(--black); color: var(--white); }
+    .agente .section-label { color: rgba(255,255,255,0.4); }
+    .agente .section-title { color: var(--white); }
+    .agente .section-sub { color: rgba(255,255,255,0.6); }
+    .agente-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 72px;
+      align-items: start;
+    }
+    .agente-info { padding-top: 8px; }
+    .agente-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .agente-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .feature-icon-wrap {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,205,0,0.15);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .feature-text strong { font-size: 15px; font-weight: 600; display: block; margin-bottom: 2px; color: var(--white); }
+    .feature-text span { font-size: 13.5px; color: rgba(255,255,255,0.55); }
+
+    /* Widget container */
+    .widget-container {
+      background: #111111;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      position: relative;
+    }
+    .widget-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .widget-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--yellow);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .widget-title-text h3 { font-size: 17px; font-weight: 600; color: var(--white); }
+    .widget-title-text p { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+    /* ── ELEVENLABS EMBED AREA ── */
+    .elevenlabs-embed {
+      background: #1a1a1a;
+      border: 1.5px dashed rgba(255,205,0,0.35);
+      border-radius: var(--radius-md);
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .embed-placeholder-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(255,205,0,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+    }
+    .embed-placeholder-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .embed-placeholder-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      max-width: 260px;
+      line-height: 1.55;
+    }
+    .embed-code-hint {
+      background: rgba(255,205,0,0.1);
+      border: 1px solid rgba(255,205,0,0.2);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 12px;
+      color: #ffd94d;
+      font-family: monospace;
+    }
+
+    /* ─── BENEFICIOS ─────────────────────────────────────────────── */
+    .beneficios-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 56px;
+    }
+    .beneficio-card {
+      padding: 32px 28px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--gray-200);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .beneficio-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+    .beneficio-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 48px;
+      color: var(--yellow);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .beneficio-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .beneficio-desc { font-size: 14.5px; color: var(--gray-600); line-height: 1.6; }
+    .beneficio-icon-bar {
+      display: flex;
+      gap: 6px;
+      margin-top: 20px;
+    }
+    .icon-tag {
+      background: var(--gray-100);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 12px;
+      color: var(--gray-600);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ─── AVISO LEGAL ────────────────────────────────────────────── */
+    .aviso { background: #fffbde; }
+    .aviso-box {
+      border: 1.5px solid #f0d900;
+      border-radius: var(--radius-md);
+      padding: 32px 36px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .aviso-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+    .aviso-text h3 { font-size: 17px; font-weight: 600; margin-bottom: 10px; color: #5c4a00; }
+    .aviso-text p { font-size: 15px; color: #7a6200; line-height: 1.65; }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      color: rgba(255,255,255,0.5);
+      padding: 48px 0 32px;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+    }
+    .footer-logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--yellow);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--black);
+    }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
+    .footer-copy { font-size: 13px; }
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin: 32px 0 24px;
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,205,0,0.12);
+      border: 1px solid rgba(255,205,0,0.2);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 12px;
+      color: #ffd94d;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .agente-inner { grid-template-columns: 1fr; gap: 40px; }
+      .consultas-grid { grid-template-columns: repeat(2, 1fr); }
+      .beneficios-inner { grid-template-columns: 1fr; }
+      nav { display: none; }
+      .nav-toggle { display: flex; }
+      .header-cta .btn-outline { display: none; }
+    }
+    @media (max-width: 600px) {
+      .consultas-grid { grid-template-columns: 1fr; }
+      .section { padding: 60px 0; }
+      .aviso-box { padding: 22px 20px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ─── MOBILE NAV ─────────────────────────────────────────────── */
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      background: var(--white);
+      border-top: 1px solid var(--gray-200);
+      padding: 16px 24px;
+      gap: 4px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--gray-600);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray-200);
+      transition: color var(--transition);
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover { color: var(--black); }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════════════════ -->
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a href="#inicio" class="logo">
+          <div class="logo-mark">G</div>
+          Guía Norte
+        </a>
+
+        <nav>
+          <a href="#inicio">Inicio</a>
+          <a href="#consultas">Consultas</a>
+          <a href="#asistente">Asistente</a>
+          <a href="#aviso">Aviso</a>
+        </nav>
+
+        <div class="header-cta">
+          <a href="#consultas" class="btn btn-outline">Ver consultas frecuentes</a>
+          <a href="#asistente" class="btn btn-primary">Hablar con el asistente</a>
+        </div>
+
+        <button class="nav-toggle" aria-label="Menú" onclick="toggleNav()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-nav" id="mobileNav">
+      <a href="#inicio" onclick="closeNav()">Inicio</a>
+      <a href="#consultas" onclick="closeNav()">Consultas frecuentes</a>
+      <a href="#asistente" onclick="closeNav()">Asistente</a>
+      <a href="#aviso" onclick="closeNav()">Aviso legal</a>
+    </nav>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════════════ -->
+  <section class="hero" id="inicio">
+    <div class="container">
+      <div class="hero-inner">
+
+        <!-- Texto izquierda -->
+        <div>
+          <div class="hero-badge">
+            <div class="hero-badge-dot">✦</div>
+            Proyecto académico experimental · 2026
+          </div>
+
+          <h1 class="hero-title">
+            Tu asistente<br/>
+            académico<br/>
+            <em>universitario</em>
+          </h1>
+
+          <p class="hero-sub">
+            Consulta información general sobre reglamentos, trámites, matrícula, vida académica y canales de orientación estudiantil.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#asistente" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              Iniciar consulta
+            </a>
+            <a href="#consultas" class="btn btn-outline">Ver consultas frecuentes</a>
+          </div>
+        </div>
+
+        <!-- Chat card derecha -->
+        <div class="chat-card" aria-hidden="true">
+          <div class="chat-card-header">
+            <div class="chat-avatar">🎓</div>
+            <div>
+              <div class="chat-name">Guía Norte</div>
+              <div class="chat-status">
+                <div class="status-dot"></div>
+                En línea · Asistente académico
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-messages">
+            <div class="msg" style="animation-delay:.1s">
+              <div class="msg-avatar bot">🎓</div>
+              <div class="msg-bubble bot">¡Hola! Soy Guía Norte, tu asistente académico. ¿En qué puedo ayudarte hoy?</div>
+            </div>
+            <div class="msg user" style="animation-delay:.35s">
+              <div class="msg-avatar user">👤</div>
+              <div class="msg-bubble user">¿Cuáles son los plazos de matrícula?</div>
+            </div>
+            <div class="msg" style="animation-delay:.6s">
+              <div class="msg-avatar bot">🎓</div>
+              <div class="msg-bubble bot">Los plazos de matrícula varían según el ciclo. Te recomiendo verificar el calendario en los canales oficiales de la universidad.</div>
+            </div>
+            <div class="msg" style="animation-delay:.85s">
+              <div class="msg-avatar bot">🎓</div>
+              <div class="typing-indicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input-row">
+            <div class="chat-input-fake">Escribe tu consulta aquí…</div>
+            <div class="chat-send">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       CONSULTAS FRECUENTES
+  ══════════════════════════════════════════════════ -->
+  <section class="section consultas" id="consultas">
+    <div class="container">
+      <span class="section-label">¿Qué puedes consultar?</span>
+      <h2 class="section-title">Consultas frecuentes</h2>
+      <p class="section-sub">El asistente puede orientarte sobre estas áreas de la vida académica universitaria.</p>
+
+      <div class="consultas-grid">
+
+        <div class="card">
+          <div class="card-icon">📋</div>
+          <div class="card-title">Reglamentos académicos</div>
+          <div class="card-desc">Información general sobre normas, políticas de evaluación, asistencia y conducta estudiantil.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📝</div>
+          <div class="card-title">Matrícula</div>
+          <div class="card-desc">Orientación sobre procesos de matrícula regular, reincorporaciones y cambios de carrera.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🗂️</div>
+          <div class="card-title">Trámites</div>
+          <div class="card-desc">Guía sobre constancias, certificados, carnés, validaciones de cursos y otros trámites administrativos.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">💳</div>
+          <div class="card-title">Pagos y servicios</div>
+          <div class="card-desc">Consultas generales sobre cronogramas de pago, beneficios, becas y convenios disponibles.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📚</div>
+          <div class="card-title">Biblioteca</div>
+          <div class="card-desc">Orientación sobre acceso a recursos bibliográficos, bases de datos, préstamos y servicios digitales.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📞</div>
+          <div class="card-title">Canales de atención</div>
+          <div class="card-desc">Información sobre dónde dirigirse para soporte académico, psicopedagógico y administrativo oficial.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       AGENTE ELEVENLABS
+  ══════════════════════════════════════════════════ -->
+  <section class="section agente" id="asistente">
+    <div class="container">
+      <div class="agente-inner">
+
+        <!-- Info izquierda -->
+        <div class="agente-info">
+          <span class="section-label">Asistente por voz y texto</span>
+          <h2 class="section-title">Habla con el<br/>asistente</h2>
+          <p class="section-sub">Haz tu consulta por voz o texto y recibe orientación académica general desde cualquier dispositivo.</p>
+
+          <div class="agente-features">
+            <div class="agente-feature">
+              <div class="feature-icon-wrap">⚡</div>
+              <div class="feature-text">
+                <strong>Respuestas rápidas</strong>
+                <span>Sin filas ni esperas. El asistente responde de inmediato.</span>
+              </div>
+            </div>
+            <div class="agente-feature">
+              <div class="feature-icon-wrap">🎯</div>
+              <div class="feature-text">
+                <strong>Orientación centralizada</strong>
+                <span>Accede a información de múltiples áreas en un solo lugar.</span>
+              </div>
+            </div>
+            <div class="agente-feature">
+              <div class="feature-icon-wrap">📱</div>
+              <div class="feature-text">
+                <strong>Desde cualquier dispositivo</strong>
+                <span>Disponible en computadora, tablet o celular.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Widget derecha -->
+        <div class="widget-container">
+          <div class="widget-header">
+            <div class="widget-icon">🎓</div>
+            <div class="widget-title-text">
+              <h3>Guía Norte</h3>
+              <p>Asistente académico · En línea</p>
+            </div>
+          </div>
+
+          <!-- ════════════════════════════════════════════════════════
+               ZONA DE INTEGRACIÓN ELEVENLABS
+               ════════════════════════════════════════════════════════
+               INSTRUCCIÓN PARA EL DESARROLLADOR:
+               1. Ve a tu dashboard en elevenlabs.io
+               2. Crea o selecciona tu agente conversacional
+               3. Copia el código de widget (embed code)
+               4. ELIMINA el bloque .elevenlabs-embed de abajo
+               5. PEGA el código de ElevenLabs en su lugar
+               
+               EJEMPLO DE FORMATO TÍPICO DE EMBED (referencia):
+               <elevenlabs-convai agent-id="TU_AGENT_ID_AQUI"></elevenlabs-convai>
+               <script src="https://elevenlabs.io/convai-widget/index.js" async></script>
+               ════════════════════════════════════════════════════════ -->
+
+          <!-- WIDGET ELEVENLABS INTEGRADO -->
+          <div id="elevenlabs-zone" style="min-height:200px; display:flex; align-items:center; justify-content:center;">
+            <elevenlabs-convai agent-id="agent_0001kpwna0jzfx5rb0drcj689q2k"></elevenlabs-convai>
+          </div>
+          <!-- FIN ZONA DE INTEGRACIÓN -->
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       BENEFICIOS
+  ══════════════════════════════════════════════════ -->
+  <section class="section" id="beneficios">
+    <div class="container">
+      <span class="section-label">¿Por qué usar Guía Norte?</span>
+      <h2 class="section-title">Diseñado para orientarte</h2>
+
+      <div class="beneficios-inner">
+
+        <div class="beneficio-card">
+          <div class="beneficio-num">01</div>
+          <div class="beneficio-title">Respuestas rápidas</div>
+          <div class="beneficio-desc">
+            Obtén orientación inmediata sin esperar turnos ni colas virtuales. El asistente está disponible cuando lo necesitas.
+          </div>
+          <div class="beneficio-icon-bar">
+            <span class="icon-tag">⚡ Inmediato</span>
+            <span class="icon-tag">🕐 24/7</span>
+          </div>
+        </div>
+
+        <div class="beneficio-card">
+          <div class="beneficio-num">02</div>
+          <div class="beneficio-title">Orientación centralizada</div>
+          <div class="beneficio-desc">
+            Reglamentos, trámites, matrícula y más: toda la información académica general en un solo lugar, organizada y accesible.
+          </div>
+          <div class="beneficio-icon-bar">
+            <span class="icon-tag">📋 Organizado</span>
+            <span class="icon-tag">🎯 Preciso</span>
+          </div>
+        </div>
+
+        <div class="beneficio-card">
+          <div class="beneficio-num">03</div>
+          <div class="beneficio-title">Desde cualquier dispositivo</div>
+          <div class="beneficio-desc">
+            Accede desde tu computadora, tableta o teléfono. La plataforma es completamente responsive y adaptada a todos los dispositivos.
+          </div>
+          <div class="beneficio-icon-bar">
+            <span class="icon-tag">💻 Desktop</span>
+            <span class="icon-tag">📱 Móvil</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       AVISO IMPORTANTE
+  ══════════════════════════════════════════════════ -->
+  <section class="section aviso" id="aviso">
+    <div class="container">
+      <div class="aviso-box">
+        <div class="aviso-icon">⚠️</div>
+        <div class="aviso-text">
+          <h3>Aviso importante</h3>
+          <p>
+            Este asistente es un <strong>proyecto académico experimental</strong>. No representa un canal oficial de la Universidad Privada del Norte. La información proporcionada es de carácter orientativo y general. Para decisiones finales, el estudiante debe validar la información en los <strong>canales oficiales de la universidad</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">
+          <div class="footer-logo-mark">G</div>
+          Guía Norte
+        </div>
+        <div class="footer-links">
+          <a href="#inicio">Inicio</a>
+          <a href="#consultas">Consultas</a>
+          <a href="#asistente">Asistente</a>
+          <a href="#aviso">Aviso</a>
+        </div>
+      </div>
+
+      <hr class="footer-divider" />
+
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2026 Guía Norte. Todos los derechos reservados.</div>
+        <div class="footer-tag">
+          🔬 Proyecto académico experimental
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════════════════ -->
+  <!-- Script de ElevenLabs -->
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+  <script>
+    /* ── Navegación mobile ── */
+    function toggleNav() {
+      const nav = document.getElementById('mobileNav');
+      nav.classList.toggle('open');
+    }
+    function closeNav() {
+      document.getElementById('mobileNav').classList.remove('open');
+    }
+
+    /* ── Animación de entrada para secciones ── */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.card, .beneficio-card, .agente-feature, .aviso-box').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+
+    /* ── Header sombra al scroll ── */
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 10) {
+        header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.08)';
+      } else {
+        header.style.boxShadow = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>
